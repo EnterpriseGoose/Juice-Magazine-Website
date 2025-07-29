@@ -56,9 +56,22 @@ export default function Home() {
 
   onMount(async () => {
     console.log('fetching users');
-    let res = await getGames();
-    console.log(res);
-    setUsers(res as any);
+    if (
+      localStorage.getItem('users') &&
+      localStorage.getItem('lastUpdated') &&
+      new Date(localStorage.getItem('lastUpdated') || '').getTime() >
+        Date.now() - 1000 * 60 * 60 * 24 * 14
+    ) {
+      console.log('using local storage');
+      const users = JSON.parse(localStorage.getItem('users') || '[]');
+      setUsers(users);
+    } else {
+      let res = await getGames();
+      console.log(res);
+      localStorage.setItem('users', JSON.stringify(res));
+      localStorage.setItem('lastUpdated', new Date().toISOString());
+      setUsers(res as any);
+    }
 
     console.log('calculating games...');
     setGames(
