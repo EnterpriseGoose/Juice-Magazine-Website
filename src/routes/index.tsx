@@ -10,11 +10,11 @@ const urlRegex =
 
 const getGames = async () => {
   'use server';
-  // let res = await axios.get(
-  //   'https://juice.hackclub.com/api/get-magazine?token=W1V53YYm5FL3xTAW'
-  // );
+  let res = await axios.get(
+    'https://juice.hackclub.com/api/get-magazine?token=W1V53YYm5FL3xTAW'
+  );
 
-  let res = { data };
+  //let res = { data };
 
   return res.data;
 };
